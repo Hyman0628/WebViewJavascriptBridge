@@ -1,6 +1,10 @@
+<!--官方Demo添加中文注释--XanderXu-->
+<!--https://github.com/XanderXu/WebViewJavascriptBridge.git -->
 <!doctype html>
 <html><head>
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<!-- 中文支持 -->
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
 	<style type='text/css'>
 		html { font-family:Helvetica; color:#222; }
 		h1 { color:steelblue; font-size:24px; margin-top:24px; }
@@ -8,12 +12,12 @@
 		.logLine { border-bottom:1px solid #ccc; padding:4px 2px; font-family:courier; font-size:11px; }
 	</style>
 </head><body>
-	<h1>WebViewJavascriptBridge Demo</h1>
+	<h1>WebViewJavascriptBridge 官方Demo</h1>
 	<script>
 	window.onerror = function(err) {
 		log('window.onerror: ' + err)
 	}
-
+    /*这段代码是固定的，必须要放到js中*/
     function setupWebViewJavascriptBridge(callback) {
         if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
         if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
@@ -24,7 +28,9 @@
         document.documentElement.appendChild(WVJBIframe);
         setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
     }
-
+    
+    
+    /*与OC交互的所有JS方法都要放在此处注册，才能通过JS调用OC,,或者让OC调用这里的JS*/
     setupWebViewJavascriptBridge(function(bridge) {
 		var uniqueId = 1
 		function log(message, data) {
@@ -35,23 +41,34 @@
 			if (log.children.length) { log.insertBefore(el, log.children[0]) }
 			else { log.appendChild(el) }
 		}
-
+                                 
+                                 
+                                 
+        /*js注册的方法,给OC用*/
+         /*JS给ObjC提供公开的API，在ObjC端可以手动调用JS的这个API。接收ObjC传过来的参数，且可以回调ObjC*/
 		bridge.registerHandler('testJavascriptHandler', function(data, responseCallback) {
-			log('ObjC called testJavascriptHandler with', data)
-			var responseData = { 'Javascript Says':'Right back atcha!' }
-			log('JS responding with', responseData)
+            /*oc传过来的参数data,是个json字典*/
+			log('ObjC 调用了js方法 with', data)
+            /*创建responseData,回调给OC*/
+			var responseData = { 'Javascript calling大喊':'回来haha!' }
+			log('JS 回应 with', responseData)
 			responseCallback(responseData)
 		})
 
 		document.body.appendChild(document.createElement('br'))
-
+        /*创建js按钮*/
 		var callbackButton = document.getElementById('buttons').appendChild(document.createElement('button'))
-		callbackButton.innerHTML = 'Fire testObjcCallback'
+		callbackButton.innerHTML = '这是一个js按钮,点击调用OC'
+         /*点击js按钮,调用OC方法*/
 		callbackButton.onclick = function(e) {
+            /*取消元素默认动作*/
 			e.preventDefault()
-			log('JS calling handler "testObjcCallback"')
+             /*js打印输出*/
+			log('JS 调用OC方法 "testObjcCallback"')
+            /*js调用OC方法,并传递参数*/
 			bridge.callHandler('testObjcCallback', {'foo': 'bar'}, function(response) {
-				log('JS got response', response)
+                /*得到OC方法处理后回调的response*/
+				log('JS 拿到 response', response)
 			})
 		}
 	})
