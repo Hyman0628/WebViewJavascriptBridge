@@ -48,7 +48,7 @@
          /*JS给ObjC提供公开的API，在ObjC端可以手动调用JS的这个API。接收ObjC传过来的参数，且可以回调ObjC*/
 		bridge.registerHandler('testJavascriptHandler', function(data, responseCallback) {
             /*oc传过来的参数data,是个json字典*/
-			log('ObjC 调用了js方法 with', data)
+			log('ObjC 调用了js方法 with参数', data)
             /*创建responseData,回调给OC*/
 			var responseData = { 'Javascript calling大喊':'回来haha!' }
 			log('JS 回应 with', responseData)
