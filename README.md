@@ -1,55 +1,11 @@
 WebViewJavascriptBridge
 =======================
 
-[![Build Status](https://travis-ci.org/marcuswestin/WebViewJavascriptBridge.svg)](https://travis-ci.org/marcuswestin/WebViewJavascriptBridge)
-
-An iOS/OSX bridge for sending messages between Obj-C and JavaScript in UIWebViews/WebViews.
-
-Who uses WebViewJavascriptBridge?
----------------------------------
-WebViewJavascriptBridge is used by a range of companies and projects. This is a small and incomplete sample list:
-
-- [Facebook Messenger](https://www.facebook.com/mobile/messenger)
-- [Facebook Paper](https://facebook.com/paper)
-- [Yardsale](http://www.getyardsale.com/)
-- [EverTrue](http://www.evertrue.com/)
-- [Game Insight](http://www.game-insight.com/)
-- [Sush.io](http://www.sush.io)
-- [Imbed](http://imbed.github.io/)
-- [CareZone](https://carezone.com)
-- [Hemlig](http://www.hemlig.co)
-- [Altralogica](http://www.altralogica.it)
-- [鼎盛中华](https://itunes.apple.com/us/app/ding-sheng-zhong-hua/id537273940?mt=8)
-- [FRIL](https://fril.jp)
-- [留白·WHITE](http://liubaiapp.com)
-
-Installation (iOS & OSX)
-------------------------
-
-### Installation with CocoaPods
-Add this to your [podfile](https://guides.cocoapods.org/using/getting-started.html) and run `pod install` to install:
-
-```ruby
-`pod 'WebViewJavascriptBridge', '~> 5.0'`
-```
-
-### Manual installation
-
-Drag the `WebViewJavascriptBridge` folder into your project.
-
-In the dialog that appears, uncheck "Copy items into destination group's folder" and select "Create groups for any folders".
-
-Examples
---------
-
-See the `Example Apps/` folder. Open either the iOS or OSX project and hit run to see it in action.
-
-To use a WebViewJavascriptBridge in your own project:
-
+###给官方示例Demo添加了中文注释,方便大家阅读学习
 Usage
 -----
 
-1) Import the header file and declare an ivar property:
+1) 导入头文件,声明变量:
 
 ```objc
 #import "WebViewJavascriptBridge.h"
@@ -61,13 +17,13 @@ Usage
 @property WebViewJavascriptBridge* bridge;
 ```
 
-2) Instantiate WebViewJavascriptBridge with a UIWebView (iOS) or WebView (OSX):
+2) 用 UIWebView (iOS) or WebView (OSX)来初始化 WebViewJavascriptBridge :
 
 ```objc
 self.bridge = [WebViewJavascriptBridge bridgeForWebView:webView];
 ```
 
-3) Register a handler in ObjC, and call a JS handler:
+3) 在OC中注册事件句柄,调用JS句柄:
 
 ```objc
 [self.bridge registerHandler:@"ObjC Echo" handler:^(id data, WVJBResponseCallback responseCallback) {
@@ -79,7 +35,7 @@ self.bridge = [WebViewJavascriptBridge bridgeForWebView:webView];
 }];
 ```
 
-4) Copy and paste `setupWebViewJavascriptBridge` into your JS:
+4)复制粘贴 `setupWebViewJavascriptBridge` 到JS中:
 	
 ```javascript
 function setupWebViewJavascriptBridge(callback) {
@@ -94,7 +50,7 @@ function setupWebViewJavascriptBridge(callback) {
 }
 ```
 
-5) Finally, call `setupWebViewJavascriptBridge` and then use the bridge to register handlers and call ObjC handlers:
+5) 最后, 调用 `setupWebViewJavascriptBridge` 并使用bridge 注册事件句柄,来调用OC句柄:
 
 ```javascript
 setupWebViewJavascriptBridge(function(bridge) {
@@ -111,24 +67,26 @@ setupWebViewJavascriptBridge(function(bridge) {
 })
 ```
 
-WKWebView Support (iOS 8+ & OS 10.10+)
+支持WKWebView (iOS 8+ & OS 10.10+)
 --------------------------------------
 
 (WARNING: WKWebView still has [bugs and missing network APIs.](https://github.com/ShingoFukuyama/WKWebViewTips/blob/master/README.md) It may not be a simple drop-in replacement).
 
 WebViewJavascriptBridge supports [WKWebView](http://nshipster.com/wkwebkit/) for iOS 8 and OSX Yosemite. In order to use WKWebView you need to instantiate the `WKWebViewJavascriptBridge`. The rest of the `WKWebViewJavascriptBridge` API is the same as `WebViewJavascriptBridge`.
 
-1) Import the header file:
+1) 导入头文件:
 
 ```objc
 #import "WKWebViewJavascriptBridge.h"
 ```
 
-2) Instantiate WKWebViewJavascriptBridge and with a WKWebView object
+2) 用 WKWebView 对象初始化 WKWebViewJavascriptBridge 
 
 ```objc
 WKWebViewJavascriptBridge* bridge = [WKWebViewJavascriptBridge bridgeForWebView:webView];
 ```
+*************************
+
 
 Automatic reference counting (ARC)
 ----------------------------------
