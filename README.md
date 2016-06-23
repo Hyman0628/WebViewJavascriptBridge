@@ -92,15 +92,16 @@ Automatic reference counting (ARC)
 ----------------------------------
 This library relies on ARC, so if you use ARC in you project, all works fine.
 But if your project have no ARC support, be sure to do next steps:
-
+本框架依赖于ARC,如果你是ARC的项目,那么一切正常.但是如果你的项目不支持ARC,请按下列步骤操作:
 1) In your Xcode project open project settings -> 'Build Phases'
-
+1)在Xcode项目中打开project settings -> 'Build Phases'
 2) Expand 'Compile Sources' header and find all *.m files which are belongs to this library. Make attention on the 'Compiler Flags' in front of each source file in this list
-
+2)展开'Compile Sources'标题,找到所有属于本框架的*.m文件.注意列表中每个源文件前面的'Compiler Flags'
 3) For each file add '-fobjc-arc' flag
+3)为每个文件添加'-fobjc-arc'
 
 Now all WVJB files will be compiled with ARC support.
-
+现在所有的WVJB文件都能编译支持ARC了
 Contributors & Forks
 --------------------
 Contributors: https://github.com/marcuswestin/WebViewJavascriptBridge/graphs/contributors
@@ -115,7 +116,7 @@ API Reference
 ##### `[WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webview`
 
 Create a javascript bridge for the given web view.
-
+为指定的web view创建javascript bridge
 Example:
 
 ```objc	
@@ -125,7 +126,7 @@ Example:
 ##### `[bridge registerHandler:(NSString*)handlerName handler:(WVJBHandler)handler]`
 
 Register a handler called `handlerName`. The javascript can then call this handler with `WebViewJavascriptBridge.callHandler("handlerName")`.
-
+注册名为`handlerName`的句柄.这样javascript就能在`WebViewJavascriptBridge.callHandler("handlerName")`中调用这个句柄
 Example:
 
 ```objc
@@ -142,7 +143,7 @@ Example:
 ##### `[bridge callHandler:(NSString*)handlerName data:(id)data responseCallback:(WVJBResponseCallback)callback]`
 
 Call the javascript handler called `handlerName`. If a `responseCallback` block is given the javascript handler can respond.
-
+调用javascript中名为`handlerName`的句柄.如果`responseCallback`这个block有值,那么javascript句柄会回调
 Example:
 
 ```objc
@@ -164,7 +165,7 @@ Optionally, set a `UIWebViewDelegate` if you need to respond to the [web view's 
 ##### `bridge.registerHandler("handlerName", function(responseData) { ... })`
 
 Register a handler called `handlerName`. The ObjC can then call this handler with `[bridge callHandler:"handlerName" data:@"Foo"]` and `[bridge callHandler:"handlerName" data:@"Foo" responseCallback:^(id responseData) { ... }]`
-
+注册名为`handlerName`的句柄.这样ObjC就能在 `[bridge callHandler:"handlerName" data:@"Foo"]` 和 `[bridge callHandler:"handlerName" data:@"Foo" responseCallback:^(id responseData) { ... }]`中调用这个句柄
 Example:
 
 ```javascript
@@ -179,7 +180,7 @@ bridge.registerHandler("getCurrentPageUrl", function(data, responseCallback) {
 ##### `bridge.callHandler("handlerName", data, function responseCallback(responseData) { ... })`
 
 Call an ObjC handler called `handlerName`. If a `responseCallback` function is given the ObjC handler can respond.
-
+调用OC中名为`handlerName`的句柄.如果`responseCallback`函数有值,那么OC句柄会回调
 Example:
 
 ```javascript
